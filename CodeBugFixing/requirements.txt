@@ -1,0 +1,6 @@
+flask 
+hashlib
+sqlite3
+stripe
+requests
+json

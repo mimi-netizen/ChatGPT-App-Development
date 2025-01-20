@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <title>Payment</title>
+    <style>
+      body {
+        background-color: #f6f7f9;
+      }
+      .last-results {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background-color: #ffffff;
+        border-radius: 6px;
+        box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1);
+      }
+      .last-results textarea {
+        width: 100%;
+        min-height: 150px;
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        border: 1px solid #dbdbdb;
+        border-radius: 4px;
+        resize: vertical;
+        font-family: monospace;
+        background-color: #f8f9fa;
+      }
+      .last-results h3 {
+        margin-bottom: 1.5rem;
+        color: #363636;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+      .card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.2s ease;
+        box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1);
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(10, 10, 10, 0.2);
+      }
+      .card-content {
+        flex-grow: 1;
+      }
+      .title {
+        color: #3b5998;
+      }
+      .subtitle {
+        color: #4b76be;
+      }
+      .stripe-button-el {
+        width: 100%;
+        margin-top: 1rem;
+      }
+      .stripe-button-el span {
+        background: #3b5998 !important;
+        background-image: none !important;
+        box-shadow: none !important;
+      }
+      .section {
+        padding: 3rem 1.5rem;
+      }
+      .plan-features {
+        margin-top: 1rem;
+        padding-left: 1.2rem;
+      }
+      .plan-features li {
+        margin-bottom: 0.5rem;
+        color: #4a4a4a;
+      }
+      .best-value {
+        position: absolute;
+        top: -12px;
+        right: -12px;
+        background: #48c774;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        {% if explanation and fixed_code %}
+        <div class="last-results">
+          <h3>Your Last Results</h3>
+          <div class="field">
+            <label class="label">Fixed Code</label>
+            <textarea readonly>{{ fixed_code }}</textarea>
+          </div>
+          <div class="field">
+            <label class="label">Explanation</label>
+            <textarea readonly>{{ explanation }}</textarea>
+          </div>
+        </div>
+        {% endif %}
+
+        <h1 class="title has-text-centered">Choose Your Plan</h1>
+        <p class="subtitle has-text-centered is-6 mb-6">
+          Get unlimited access to our code fixing and explanation service
+        </p>
+
+        <div class="columns">
+          <div class="column">
+            <div class="card">
+              <div class="card-content">
+                <p class="title is-4">Monthly Plan</p>
+                <p class="subtitle is-2 mb-4">
+                  $5<span class="is-size-6">/month</span>
+                </p>
+                <p class="mb-4">
+                  Perfect for short-term projects and quick fixes.
+                </p>
+                <ul class="plan-features">
+                  <li>Unlimited code fixes</li>
+                  <li>Detailed explanations</li>
+                  <li>Cancel anytime</li>
+                  <li>24/7 access</li>
+                </ul>
+              </div>
+              <footer class="card-footer p-3">
+                <form
+                  action="/charge"
+                  method="post"
+                  class="is-flex is-flex-direction-column is-align-items-stretch"
+                  style="width: 100%"
+                >
+                  <input type="hidden" name="plan" value="monthly" />
+                  <input type="hidden" name="amount" value="500" />
+                  <script
+                    src="https://checkout.stripe.com/checkout.js"
+                    class="stripe-button"
+                    data-key="your-data-key"
+                    data-amount="500"
+                    data-name="Monthly Plan"
+                    data-description="$5 per month"
+                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                    data-locale="auto"
+                    data-zip-code="false"
+                  ></script>
+                </form>
+              </footer>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="card">
+              <div class="best-value">Best Value</div>
+              <div class="card-content">
+                <p class="title is-4">Quarterly Plan</p>
+                <p class="subtitle is-2 mb-4">
+                  $12<span class="is-size-6">/quarter</span>
+                </p>
+                <p class="mb-4">Save 20% compared to monthly billing!</p>
+                <ul class="plan-features">
+                  <li>Everything in Monthly plan</li>
+                  <li>Priority support</li>
+                  <li>Bulk code processing</li>
+                  <li>20% savings</li>
+                </ul>
+              </div>
+              <footer class="card-footer p-3">
+                <form
+                  action="/charge"
+                  method="post"
+                  class="is-flex is-flex-direction-column is-align-items-stretch"
+                  style="width: 100%"
+                >
+                  <input type="hidden" name="plan" value="quarterly" />
+                  <input type="hidden" name="amount" value="1200" />
+                  <script
+                    src="https://checkout.stripe.com/checkout.js"
+                    class="stripe-button"
+                    data-key="your-data-key"
+                    data-amount="1200"
+                    data-name="Quarterly Plan"
+                    data-description="$12 per quarter"
+                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                    data-locale="auto"
+                    data-zip-code="false"
+                  ></script>
+                </form>
+              </footer>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="card">
+              <div class="card-content">
+                <p class="title is-4">Annual Plan</p>
+                <p class="subtitle is-2 mb-4">
+                  $50<span class="is-size-6">/year</span>
+                </p>
+                <p class="mb-4">Maximum savings for long-term users!</p>
+                <ul class="plan-features">
+                  <li>Everything in Quarterly plan</li>
+                  <li>VIP support</li>
+                  <li>Advanced code analysis</li>
+                  <li>30% savings</li>
+                </ul>
+              </div>
+              <footer class="card-footer p-3">
+                <form
+                  action="/charge"
+                  method="post"
+                  class="is-flex is-flex-direction-column is-align-items-stretch"
+                  style="width: 100%"
+                >
+                  <input type="hidden" name="plan" value="yearly" />
+                  <input type="hidden" name="amount" value="5000" />
+                  <script
+                    src="https://checkout.stripe.com/checkout.js"
+                    class="stripe-button"
+                    data-key="your data key"
+                    data-amount="5000"
+                    data-name="Yearly Plan"
+                    data-description="$50 per year"
+                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                    data-locale="auto"
+                    data-zip-code="false"
+                  ></script>
+                </form>
+              </footer>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

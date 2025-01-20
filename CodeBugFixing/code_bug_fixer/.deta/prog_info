@@ -1,0 +1,1 @@
+{"id":"92c2e0bd-8f81-4aa2-a22d-dd2f4d1ab6b4","space":46341,"runtime":"python3.9","name":"code_bug_fixer","path":"e1jc98","project":"b0l77r3y","account":"144798365827","region":"us-east-1","deps":["flask","openai"],"envs":null,"public":true,"log_level":"debug","cron":""}
