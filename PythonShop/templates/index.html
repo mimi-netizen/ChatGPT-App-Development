@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stripe and Flask Demo</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        table th {
+            padding: 20px;
+            background-color: #ddd;
+            border-bottom: 1px solid black;
+        }
+
+        table td {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        form input[type="submit"] {
+            border-radius: 25px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            outline: none;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 100px;
+            font-size: 36px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Stripe and Flask Demo</h1>
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Order</th>
+        </tr>
+        {% for id in products %}
+        <tr>
+            <td>{{ products[id].name }}</td>
+            <td>
+                {{ "$%.2f"|format(products[id].price / 100) }} USD
+                {% if products[id].per %}per {{ products[id].per }}{% endif %}
+            </td>
+            <td>
+                <form method="POST" action="/order/{{ id }}">
+                    <input type="submit" value="Order Now!">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
