@@ -1,0 +1,3 @@
+[submodule "ChatgptAPI/ChatGPT-API-Leakage"]
+	path = ChatgptAPI/ChatGPT-API-Leakage
+	url = https://github.com/Junyi-99/ChatGPT-API-Scanner
