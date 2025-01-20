@@ -4,7 +4,7 @@ import openai
 app = Flask(__name__)
 
 # API Token
-openai.api_key = "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"
+openai.api_key = ""
 
 
 

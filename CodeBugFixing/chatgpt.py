@@ -7,8 +7,8 @@ import stripe
 app = Flask(__name__)
 
 # API Token
-openai.api_key = "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"
-stripe.api_key = "sk_test_51MZ5ggEIvcSmcyn9g9XQHOMrydvU4IYJB6punDJWwC3HjKNctvy6TzHOoKdqdgrlphM1rtKkyO1fv632mC0Sm5ak00a2lQ8CPX"
+openai.api_key = ""
+stripe.api_key = ""
 
 
 def initialize_database():
