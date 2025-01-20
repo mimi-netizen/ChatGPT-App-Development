@@ -5,7 +5,7 @@ import json
 app = Flask(__name__)
 
 # Use your Gemini API key
-gemini_api_key = "AIzaSyAAadKS6jNSX_s_1KadF1oyF6g7cXTOAfs"
+gemini_api_key = ""
 
 @app.route("/")
 def index():
