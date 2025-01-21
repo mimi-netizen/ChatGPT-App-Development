@@ -8,7 +8,7 @@ Based on the repository structure, I'll provide a detailed analysis of each proj
 
 ## 1. ArticleGenerator
 
-A web-based content generation tool primarily built with HTML (given the high HTML percentage in the repo).
+A web-based content generation tool primarily built with HTML & PyQt5.
 
 ![](image/articlegenerator.jpg)
 
